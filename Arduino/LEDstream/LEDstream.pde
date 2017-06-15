@@ -123,12 +123,12 @@ void setup()
   // Issue test pattern to LEDs on startup.  This helps verify that
   // wiring between the Arduino and LEDs is correct.  Not knowing the
   // actual number of LEDs connected, this sets all of them (well, up
-  // to the first 25,000, so as not to be TOO time consuming) to red,
+  // to the first 1,000, so as not to be TOO time consuming) to red,
   // green, blue, then off.  Once you're confident everything is working
   // end-to-end, it's OK to comment this out and reprogram the Arduino.
   uint8_t testcolor[] = { 0, 0, 0, 255, 0, 0 };
   for(char n=3; n>=0; n--) {
-    for(c=0; c<25000; c++) {
+    for(c=0; c<1000; c++) {
       for(i=0; i<3; i++) {
         for(SPDR = testcolor[n + i]; !(SPSR & _BV(SPIF)); );
       }
@@ -226,9 +226,9 @@ void setup()
         // data to arrive (up to a point).
         if((bytesBuffered < 32) && (bytesRemaining > bytesBuffered)) {
           startTime = micros();
-          hold      = 100 + (32 - bytesBuffered) * 10;
+          hold      = 64 + (32 - bytesBuffered) * 4;
           mode      = MODE_HOLD;
-	}
+        }
       } else {
         // End of data -- issue latch:
         startTime  = micros();
